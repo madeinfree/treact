@@ -8,7 +8,6 @@ export class Component {
   }
 
   setState(state) {
-    debugger
     this.state = Object.assign({}, this.state, state)
     setTimeout(() => updateRenderState(this), 0)
   }
