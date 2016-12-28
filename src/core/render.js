@@ -105,8 +105,32 @@ export function updateRenderState(ins) {
     let rerender = ins.render()
     let oldVDOMPropsChildren = rerender.props.children
     let oldChildNodes = base.childNodes
-    oldChildNodes.forEach((node, index) => {
-      createVDOM(node, oldVDOMPropsChildren[index])
+    let caculateDiffNumber
+    // 處理 oldChildNodes !== oldVDOMPropsChildren ( 可能新增或刪除 ) 補滿陣列（計算少多少，補上或減少）
+    let nodes = []
+    if (oldVDOMPropsChildren.length !== oldChildNodes.length) {
+      if (oldVDOMPropsChildren > oldChildNodes) {
+        for (let i = 0; i < oldVDOMPropsChildren.length; i++) {
+          if (oldChildNodes[i] && (oldVDOMPropsChildren[i].nodeName !== oldChildNodes[i].nodeName.toLowerCase())) {
+            // 往後推
+            nodes.push(undefined)
+            nodes.push(oldChildNodes[i])
+          } else {
+            nodes.push(oldChildNodes[i])
+          }
+        }
+      }
+      // 刪去最後一個無效的
+      nodes.splice(-1)
+    } else {
+      nodes = oldChildNodes
+    }
+    ///
+    nodes.forEach((node, index) => {
+      let child = createVDOM(node, oldVDOMPropsChildren[index])
+      if (child && node !== child) {
+        base.insertBefore(child, nodes[index + 1])
+      }
     })
     ins._dirtyComponent = false
   }
