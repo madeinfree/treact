@@ -15,7 +15,6 @@ export function m(type, attr) {
         })
       }
       childrenMultipleArr.push(arguments[i + 2])
-      // childrenArr[i] = arguments[i + 2]
     }
   }
 
