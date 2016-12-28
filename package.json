@@ -1,0 +1,26 @@
+{
+  "name": "treact",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "build:watch": "babel src -d lib --watch"
+  },
+  "keywords": [
+    "react",
+    "preact",
+    "virtualdom",
+    "virtual dom",
+    "vdom",
+    "dom"
+  ],
+  "author": "Whien_Liou <sal95610@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0"
+  }
+}
