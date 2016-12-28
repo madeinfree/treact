@@ -8,13 +8,14 @@ export function m(type, attr) {
   let childrenMultipleArr = []
   if (childrenLength) {
     for (let i = 0; i < childrenLength; i++) {
-      if (childrenMultipleArr.length && typeof childrenMultipleArr === 'object') {
-        const args = Array.prototype.slice.call(arguments[i + 2])
+      const args = Array.prototype.slice.call(arguments[i + 2])
+      if (typeof args[i] !== 'string' && args.length && typeof args === 'object') {
         args.forEach((arg) => {
           childrenMultipleArr.push(arg)
         })
+      } else {
+        childrenMultipleArr.push(arguments[i + 2])
       }
-      childrenMultipleArr.push(arguments[i + 2])
     }
   }
 
