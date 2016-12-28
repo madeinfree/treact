@@ -1,14 +1,26 @@
 export function m(type, attr) {
   let props = {}
   let nodeName = type
+  // debugger
   const childrenLength = arguments.length - 2
-  const childrenArr = Array(childrenLength)
-  for (let i = 0; i < childrenLength; i++) {
-    childrenArr[i] = arguments[i + 2]
+  let childrenArr = Array(childrenLength)
+  // 重新計算一個 child (有可能有 array 陣列)
+  let childrenMultipleArr = []
+  if (childrenLength) {
+    for (let i = 0; i < childrenLength; i++) {
+      if (childrenMultipleArr.length && typeof childrenMultipleArr === 'object') {
+        const args = Array.prototype.slice.call(arguments[i + 2])
+        args.forEach((arg) => {
+          childrenMultipleArr.push(arg)
+        })
+      }
+      childrenMultipleArr.push(arguments[i + 2])
+      // childrenArr[i] = arguments[i + 2]
+    }
   }
 
   // add children into props
-  props.children = childrenArr
+  props.children = childrenMultipleArr
   // handleArray
   props.children.forEach((children, index) => {
     if (Array.isArray(children)) {
